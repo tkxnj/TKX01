@@ -1,0 +1,4 @@
+{
+  "appName": { "message": "NJU Login Pro" },
+  "appDesc": { "message": "Local auto-login for NJU authentication sliders and course-selection click captchas, with no cloud AI API." }
+}

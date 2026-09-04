@@ -1,0 +1,71 @@
+{
+  "manifest_version": 3,
+  "name": "NJU抢课助手(tkx改)",
+  "description": "遵循欧姆尼赛亚的意志！",
+  "version": "6.5.0",
+  "default_locale": "zh_CN",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": ["storage", "alarms"],
+  "background": {
+    "service_worker": "auth-session-prewarm.js"
+  },
+  "host_permissions": [
+    "https://authserver.nju.edu.cn/*",
+    "https://xk.nju.edu.cn/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://authserver.nju.edu.cn/*"],
+      "js": ["auth-slider-captcha.js", "auth-login-fast.js", "auth-prewarm-bridge.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://authserver.nju.edu.cn/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://xk.nju.edu.cn/*"],
+      "js": ["grab-network-bridge.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://xk.nju.edu.cn/*"],
+      "css": ["grab-page-ui.css"],
+      "js": ["grab-task-model.js", "grab-auth-presentation.js", "grab-verification-engine.js", "grab-engine.js", "grab-course-provider.js", "grab-login-shield.js", "content-grab.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icon48.png"
+      ],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": [
+        "click-captcha-worker.js",
+        "assets/click-captcha-model.onnx",
+        "assets/click-captcha-background.png",
+        "vendor/onnxruntime/ort.wasm.bundle.min.js",
+        "vendor/onnxruntime/ort-wasm-simd-threaded.mjs",
+        "vendor/onnxruntime/ort-wasm-simd-threaded.wasm"
+      ],
+      "matches": ["https://xk.nju.edu.cn/*"]
+    }
+  ]
+}
