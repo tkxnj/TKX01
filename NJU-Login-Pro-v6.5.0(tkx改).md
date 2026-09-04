@@ -5,18 +5,17 @@ NJU-Login-Pro-v6.5.0(tkx改)的使用说明
 
 
 ● 下面是改成 2~5 秒随机的完整清单。核心只 1 处，剩下全是文字。
-     ① 功能（必改，就这一处决定实际等待时间）
+  1.功能（必改，就这一处决定实际等待时间）
      
   grab-engine.js 约 785 行
-     
-  // 改前
+          将
           cadenceTarget = 1000 + Math.floor((Number.isFinite(rv) ? Math.max(0, Math.min(1, rv)) : 0.5) * 2001);
-  // 改后
+          改为
           cadenceTarget = 2000 + Math.floor((Number.isFinite(rv) ? Math.max(0, Math.min(1, rv)) : 0.5) * 3001);
 
   起点 1000→2000，跨度 2001→3001（= 5000−2000+1）。改完每轮就是 2000~5000ms 随机。
 
-  ② 文案（建议同步改，共 6 处，否则界面/日志还显示 1~3s）
+  2.文案（建议同步改，共 6 处，否则界面/日志还显示 1~3s）
 
   grab-engine.js ~1004 行（启动日志）
   // 改前
@@ -48,7 +47,7 @@ NJU-Login-Pro-v6.5.0(tkx改)的使用说明
   <!-- 改前 --> <option value="30000">随机 1~3s</option>
   <!-- 改后 --> <option value="30000">随机 2~5s</option>
 
-  ③ 注释（可选，3 处）
+  3.注释（可选，3 处）
   三个文件里常量旁都写着 // 30000 档位现表示：每轮随机等待 1~3s，顺手改成 2~5s 即可：
   - grab-engine.js:4、popup.js:15、content-grab.js:1104
 
